@@ -18,6 +18,7 @@ public class Main {
         QuizService service = context.getBean(QuizService.class);
         List<Question> questions = service.getQuestion();
         questions.forEach(q -> logger.debug(q.toString()));
+        service.startQuiz();
 
         // Данная операция, в принципе не нужна.
         // Мы не работаем пока что с БД, а Spring Boot сделает закрытие за нас
