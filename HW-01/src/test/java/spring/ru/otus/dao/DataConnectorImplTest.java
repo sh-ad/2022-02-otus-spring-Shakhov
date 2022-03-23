@@ -31,15 +31,13 @@ public class DataConnectorImplTest extends TestCase {
     @Test
     public void testFindQuestions() {
         List<Question> questions = quizService.getQuestion();
-        assertEquals("[Question: what?\n" +
-                        "   answers:\n" +
-                        "     first answer\n" +
-                        "     second answer, Question: where?\n" +
-                        "   answers:\n" +
-                        "     third answer, Question: when?\n" +
-                        "   answers:\n" +
-                        "     ]",
-                questions.toString()
+        String expected = """
+                [Question: what?
+                2
+                   answers:
+                     first answer
+                2]""";
+        assertEquals(expected, questions.toString()
         );
     }
 

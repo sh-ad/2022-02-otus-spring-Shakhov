@@ -42,7 +42,7 @@ public class DataConnectorImpl implements DataConnector {
     }
 
     @Override
-    public List<Answer> findAnswers(int question_id) {
+    public List<Answer> findAnswers(int questionId) {
         List<Answer> answers = new ArrayList<>();
         Resource resource = new ClassPathResource(answerFileName);
         try (Reader reader = new InputStreamReader(resource.getInputStream(), UTF_8)) {
@@ -54,7 +54,7 @@ public class DataConnectorImpl implements DataConnector {
             throw new UncheckedIOException(e);
         }
         return answers.stream()
-                .filter(f -> question_id == f.getQuestion_id())
+                .filter(f -> questionId == f.getQuestionId())
                 .collect(Collectors.toList());
     }
 
