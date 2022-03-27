@@ -1,7 +1,9 @@
 package spring.ru.otus.dao;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
 import spring.ru.otus.domain.Answer;
 import spring.ru.otus.domain.Question;
@@ -16,9 +18,15 @@ import java.util.stream.Collectors;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
+@Component
 public class DataConnectorImpl implements DataConnector {
-    private static final String SPLITTER = ";";
+    @Value("${app.splitter}")
+    private String SPLITTER;
+    @Value("${app.lineSeparator}")
+    private String LINE_SEPARATOR;
+    @Value("${app.questionFileName}")
     private String questionFileName;
+    @Value("${app.answerFileName}")
     private String answerFileName;
 
     @Override
@@ -27,7 +35,7 @@ public class DataConnectorImpl implements DataConnector {
         Resource resource = new ClassPathResource(questionFileName);
         try (Reader reader = new InputStreamReader(resource.getInputStream(), UTF_8)) {
             String csv = FileCopyUtils.copyToString(reader);
-            for (String questionLine : csv.split(System.getProperty("line.separator"))) {
+            for (String questionLine : csv.split(LINE_SEPARATOR)) {
                 questions.add(stringToQuestion(questionLine));
             }
         } catch (IOException e) {
@@ -47,7 +55,7 @@ public class DataConnectorImpl implements DataConnector {
         Resource resource = new ClassPathResource(answerFileName);
         try (Reader reader = new InputStreamReader(resource.getInputStream(), UTF_8)) {
             String csv = FileCopyUtils.copyToString(reader);
-            for (String answerLine : csv.split(System.getProperty("line.separator"))) {
+            for (String answerLine : csv.split(LINE_SEPARATOR)) {
                 answers.add(stringToAnswer(answerLine));
             }
         } catch (IOException e) {
@@ -69,5 +77,13 @@ public class DataConnectorImpl implements DataConnector {
 
     public void setAnswerFileName(String answerFileName) {
         this.answerFileName = answerFileName;
+    }
+
+    public void setSplitter(String splitter) {
+        this.SPLITTER = splitter;
+    }
+
+    public void setLineSeparator(String lineSeparator) {
+        this.LINE_SEPARATOR = lineSeparator;
     }
 }

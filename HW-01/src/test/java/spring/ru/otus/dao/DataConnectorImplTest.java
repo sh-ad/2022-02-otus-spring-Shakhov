@@ -24,6 +24,8 @@ public class DataConnectorImplTest extends TestCase {
         dataConnector = new DataConnectorImpl();
         dataConnector.setAnswerFileName("answers_test.csv");
         dataConnector.setQuestionFileName("questions_test.csv");
+        dataConnector.setSplitter(";");
+        dataConnector.setLineSeparator("\n");
 
         quizService = new QuizServiceImpl(dataConnector);
     }
@@ -32,13 +34,15 @@ public class DataConnectorImplTest extends TestCase {
     public void testFindQuestions() {
         List<Question> questions = quizService.getQuestion();
         String expected = """
-                [Question: what?
-                2
-                   answers:
-                     first answer
-                2]""";
-        assertEquals(expected, questions.toString()
-        );
+[Question: what?
+   answers:
+     first answer
+     second answer, Question: where?
+   answers:
+     third answer, Question: when?
+   answers:
+     ]""";
+        assertTrue(expected.equalsIgnoreCase(questions.toString()));
     }
 
     @Test
