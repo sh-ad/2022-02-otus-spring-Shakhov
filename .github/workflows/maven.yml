@@ -4,11 +4,9 @@
 name: Java CI with Maven
 
 on:
-  pull_request_target:
-    types:
-      - labeled
+  push:
     branches:
-      - 'feature/**'
+      - feature/hw-02
 
 jobs:
   build:
