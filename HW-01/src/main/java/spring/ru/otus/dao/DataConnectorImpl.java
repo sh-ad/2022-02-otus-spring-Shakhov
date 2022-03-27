@@ -78,4 +78,12 @@ public class DataConnectorImpl implements DataConnector {
     public void setAnswerFileName(String answerFileName) {
         this.answerFileName = answerFileName;
     }
+
+    public void setSplitter(String splitter) {
+        this.SPLITTER = splitter;
+    }
+
+    public void setLineSeparator(String lineSeparator) {
+        this.LINE_SEPARATOR = lineSeparator;
+    }
 }
